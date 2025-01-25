@@ -1,11 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true, // Enables React Strict Mode for better error handling
-  trailingSlash: true, // Ensures URLs have a trailing slash (useful for Firebase Hosting)
+  reactStrictMode: true,
+  trailingSlash: true,
   images: {
-    unoptimized: true, // Optional: Disables optimization for images during static export (useful for Firebase Hosting)
+    unoptimized: true, // Disable image optimization for static export
   },
-  // Add any custom configuration here as needed
 };
 
 export default nextConfig;

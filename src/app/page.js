@@ -1,21 +1,21 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { fetchCategories } from "./utils/fetchCategories";
-import CategoryCard from "./components/CategoryCard";
-import SkeletonLoader from "./components/SkeletonLoader"; // Use SkeletonLoader for placeholders
-import HeroSection from "./components/HeroSection";
+import { fetchCategories } from "../utils/fetchCategories"; // Your fetch function
+import CategoryCard from "../components/CategoryCard";
+import SkeletonLoader from "../components/SkeletonLoader"; // For skeleton loading
+import HeroSection from "../components/HeroSection";
 
 export default function HomePage() {
-  const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [categories, setCategories] = useState([]); // State to store fetched categories
+  const [loading, setLoading] = useState(true); // Loading state
+  const [error, setError] = useState(null); // Error state
 
-  // Fetch categories when the component mounts
   useEffect(() => {
+    // Function to load categories after component mounts
     const loadCategories = async () => {
       try {
-        const fetchedCategories = await fetchCategories(); // Fetch the categories
+        const fetchedCategories = await fetchCategories(); // Fetch data
         setCategories(fetchedCategories); // Set categories in state
       } catch (error) {
         setError("Sorry, we couldn't load the categories at this time."); // Handle error
@@ -25,22 +25,19 @@ export default function HomePage() {
     };
 
     loadCategories(); // Call the function to load categories
-  }, []); // Empty dependency array ensures it runs only once when the component mounts
+  }, []); // Empty dependency array ensures the effect runs only once
 
-  // Show loading skeletons while data is being fetched
+  // Show skeleton loader while categories are being fetched
   if (loading) {
     return (
       <div>
-        {/* Hero Section */}
         <HeroSection />
-
-        {/* Categories Grid with Skeleton Loader */}
         <section className="py-16 px-6 text-center bg-gray-100">
           <h2 className="text-3xl font-bold text-gray-800 mb-8">
             Explore Popular Categories
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {/* Show SkeletonLoader placeholders */}
+            {/* Show skeleton loader for each category */}
             {Array(4)
               .fill(0)
               .map((_, index) => (
@@ -52,15 +49,14 @@ export default function HomePage() {
     );
   }
 
-  // Show error message if data fetch fails
+  // Show error message if fetching fails
   if (error) {
     return <div className="text-center text-red-500">{error}</div>;
   }
 
-  // Render categories once data is loaded
+  // Render categories once fetched
   return (
     <div className="bg-gray-50">
-      {/* Hero Section */}
       <HeroSection />
 
       {/* Categories Grid */}
