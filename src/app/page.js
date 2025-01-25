@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import { fetchCategories } from "../utils/fetchCategories"; // Your fetch function
 import CategoryCard from "../components/CategoryCard";
 import SkeletonLoader from "../components/SkeletonLoader"; // For skeleton loading
-import HeroSection from "../components/HeroSection";
+import HeroSection from "./components/HeroSection";
+// import HeroSection from "../components/HeroSection";
 
 export default function HomePage() {
   const [categories, setCategories] = useState([]); // State to store fetched categories
