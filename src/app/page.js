@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { fetchCategories } from "./utils/fetchCategories";
 import CategoryCard from "./components/CategoryCard";
-import SkeletonLoader from "./components/SkeletonLoader"; // Use the new SkeletonLoader component
+import SkeletonLoader from "./components/SkeletonLoader"; // Use SkeletonLoader for placeholders
 import HeroSection from "./components/HeroSection";
 
 export default function HomePage() {
@@ -11,20 +11,23 @@ export default function HomePage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Fetch categories when the component mounts
   useEffect(() => {
     const loadCategories = async () => {
       try {
-        const fetchedCategories = await fetchCategories();
-        setCategories(fetchedCategories);
+        const fetchedCategories = await fetchCategories(); // Fetch the categories
+        setCategories(fetchedCategories); // Set categories in state
       } catch (error) {
-        setError("Sorry, we couldn't load the categories at this time.");
+        setError("Sorry, we couldn't load the categories at this time."); // Handle error
       } finally {
-        setLoading(false);
+        setLoading(false); // Stop loading
       }
     };
-    loadCategories();
-  }, []);
 
+    loadCategories(); // Call the function to load categories
+  }, []); // Empty dependency array ensures it runs only once when the component mounts
+
+  // Show loading skeletons while data is being fetched
   if (loading) {
     return (
       <div>
@@ -37,7 +40,7 @@ export default function HomePage() {
             Explore Popular Categories
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {/* Display Skeleton Loader for each category placeholder */}
+            {/* Show SkeletonLoader placeholders */}
             {Array(4)
               .fill(0)
               .map((_, index) => (
@@ -49,10 +52,12 @@ export default function HomePage() {
     );
   }
 
+  // Show error message if data fetch fails
   if (error) {
     return <div className="text-center text-red-500">{error}</div>;
   }
 
+  // Render categories once data is loaded
   return (
     <div className="bg-gray-50">
       {/* Hero Section */}
